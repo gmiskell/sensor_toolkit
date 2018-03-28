@@ -1,3 +1,2 @@
-# sensortoolkit
-## A group of functions to help in managing a low-cost air quality sensor network
-
+# Sensor Toolkit
+## A collection of R scripts to help in managing an air quality sensor network.
