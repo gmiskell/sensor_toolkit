@@ -29,6 +29,8 @@ loadMap <- function(x, multiple.files = FALSE, set.date = Sys.time(), obs, time.
   # install the development version of leaflet
   devtools::install_github('rstudio/leaflet');
   
+  library(leaflet);
+  
   # load the data
   if(multiple.files == F){
     data = x;
