@@ -4,7 +4,7 @@
 \alias{nearestNSitesFUN}
 \title{Find the Nearest n Sites.}
 \usage{
-nearestNSitesFUN(x, id, lat, lon, n)
+nearestNSitesFUN(x, id, lat, lon, n, weighted = F)
 }
 \arguments{
 \item{id}{Name of the location (as character string).}
