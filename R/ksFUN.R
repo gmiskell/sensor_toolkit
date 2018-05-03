@@ -13,7 +13,7 @@
 #' ksFUN()
 
 
-ksFUN <- function(x, obs, date, proxy, reflective = TRUE, theta = NA, tau = NA, window.length = 72){
+ksFUN <- function(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA, window.length = 72){
 	
 	# install and load required packages
 	list.of.packages <- c("raster","lubridate","data.table","tidyverse");

@@ -14,7 +14,7 @@
 #' appFUN()
 
 
-appFUN <- function(x, time.zone = 'Pacific/Auckland', data.frequency = '60 min', dashboard.title = 'AQY deployment', cols.to.display = c("O3","PM2.5","NO2"), site.col = 'Serial', lat.col = 'LAT', long.col = 'LONG'){
+shiny_display <- function(x, time.zone = 'Pacific/Auckland', data.frequency = '60 min', dashboard.title = 'AQY deployment', cols.to.display = c("O3","PM2.5","NO2"), site.col = 'site', lat.col = 'lat', long.col = 'lon'){
 
   # install and load required packages
 	list.of.packages <- c("shinyjs","shiny","xts","leaflet","raster","gstat","shinydashboard","sp","dygraphs","dplyr");
@@ -25,9 +25,9 @@ appFUN <- function(x, time.zone = 'Pacific/Auckland', data.frequency = '60 min',
 
   x$date <- as.POSIXct(x$date, format = "%Y-%m-%d %H:%M", tz = time.zone)
   date <- seq(x$date[1], x$date[nrow(x)], by = data.frequency)
-  x$Serial <- x[, site.col]
-  x$LAT <- x[, lat.col]
-  x$LONG <- x[, long.col]
+  x$Serial <- x[[site.col]]
+  x$LAT <- x[[lat.col]]
+  x$LONG <- x[[long.col]]
   serialList <- unique(x$Serial)
   lat.view = mean(x$LAT, na.rm = T)
   long.view = mean(x$LONG, na.rm = T)
@@ -233,7 +233,7 @@ server <- function(input, output, session) {
       addRasterImage(r(), opacity = input$htopc/100, colors = pal(), layerId = "Heatmap", group = "Heatmap") %>%
       removeMarker(layerId = setdiff(serialList, unique(points()[,'Serial']))) %>%
       addCircleMarkers(data = points(), ~LONG, ~LAT, color = ~pal()(pol), radius = 3, fill = T, popup =~as.character(pol), fillOpacity = 1, label =~Serial, layerId =~Serial, opacity = 1) %>%
-      addLegend(pal = pal(), values = seq(0, input$max1, 10), layerId = "legend", title = input$pol, opacity = 0.8)
+      leaflet::addLegend(pal = pal(), values = seq(0, input$max1, 10), layerId = "legend", title = input$pol, opacity = 0.8)
 
     leafletProxy("myMap2") %>%
       setView(lng = (coo()[3]+coo()[4])/2, lat = (coo()[1]+coo()[2])/2, zoom = coo()[5]) %>%
@@ -241,7 +241,7 @@ server <- function(input, output, session) {
       addRasterImage(r2(), opacity = input$htopc/100, colors = pal2(), layerId = "Heatmap2", group = "Heatmap2") %>%
       removeMarker(layerId = setdiff(serialList, unique(points()[,'Serial']))) %>%
       addCircleMarkers(data = points2(), ~LONG, ~LAT, color = ~pal2()(pol2), radius = 3, fill = T, popup =~as.character(pol2), fillOpacity = 1, label =~Serial, layerId =~Serial, opacity = 1) %>%
-      addLegend(pal = pal2(), values = seq(0, input$max2, 10), layerId = "legend", title = input$pol2, opacity = 0.8)
+      leaflet::addLegend(pal = pal2(), values = seq(0, input$max2, 10), layerId = "legend", title = input$pol2, opacity = 0.8)
   })
   observeEvent(input$goButton,{
     updateSliderInput(session, "time", value = as.POSIXct(input$timein, format = "%Y-%m-%d %H:%M", tz = time.zone))

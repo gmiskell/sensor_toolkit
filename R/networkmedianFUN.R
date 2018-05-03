@@ -12,7 +12,7 @@
 
 networkmedianFUN <- function(x, group, obs, by.row = T, id = NA, statistic = median){
 
-	list.of.packages <- c("stats","lubridate","data.table","tidyverse");
+  list.of.packages <- c("stats","lubridate","data.table","tidyverse");
   new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])];
   if(length(new.packages)) install.packages(new.packages);
   lapply(list.of.packages, library, character.only = T);
@@ -20,7 +20,7 @@ networkmedianFUN <- function(x, group, obs, by.row = T, id = NA, statistic = med
   # define variables
   x <- as.data.table(x);
   x$obs <- x[, ..obs];
-	x$group <- x[, ..group];
+  x$group <- x[, ..group];
   if(!is.na(id)) x$id <- x[, ..id];
 
   # filter data to that of interest
@@ -50,11 +50,11 @@ networkmedianFUN <- function(x, group, obs, by.row = T, id = NA, statistic = med
 			if(length(z$obs) > 1){
 				selected.group = i;
 				group.stat <- data.frame(group = selected.group,
-																 network.proxy = statistic(z$obs[z$group != selected.group], na.rm = T))
+				network.proxy = statistic(z$obs[z$group != selected.group], na.rm = T))
 				output = bind_rows(output, group.stat);
 			}
 		}
-		x <- full_join(x, output);
+	x <- full_join(x, output);
     x <- unique(x);
 	}
 
@@ -66,6 +66,6 @@ networkmedianFUN <- function(x, group, obs, by.row = T, id = NA, statistic = med
     Z.data <- net.FUN(z)
   }
 
-	if(!is.na(id)) Z.data <- join(Z.data, z.id);
+	Z.data <- left_join(Z.data, z.id, by = c("group", "obs"));
 	return(Z.data);
 };

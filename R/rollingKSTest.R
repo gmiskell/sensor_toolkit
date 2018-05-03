@@ -16,7 +16,7 @@ rollingKStest <- function(z, obs, proxy, window = 1440){
 
   # define variables
   z <- as.data.frame(z);
-  z$obs <- z[, obs]; z$proxy <- z[, proxy];
+  z$obs <- z[[obs]]; z$proxy <- z[[proxy]];
   
   if(length(z$obs) > window){
     
@@ -27,7 +27,7 @@ rollingKStest <- function(z, obs, proxy, window = 1440){
     date <- z[, 'date'];
     
     # turn data into data frame
-    y <- data.frame(z[, obs], z[,proxy]);
+    y <- data.frame(z$obs, z$proxy);
   
     # convert df into zoo classes used in R for rolling functions
     y.zoo <-zoo(y);
@@ -40,7 +40,7 @@ rollingKStest <- function(z, obs, proxy, window = 1440){
   min.length <- min(c(length(na.omit(x)),length(na.omit(y))));
   
   if(min.length > 0.5 * length(x)){
-    p.value <- ks.test(x, y)$p.value;
+    p.value <- suppressWarnings(ks.test(x, y)$p.value);
   } else {
     p.value <- NA;
   }
@@ -52,7 +52,7 @@ ks.dev.s <- function(x, y){
   min.length <- min(c(length(na.omit(x)),length(na.omit(y))));
   
   if(min.length > 0.5 * length(x)){
-    statistic <- ks.test(x, y)$statistic;
+    statistic <- suppressWarnings(ks.test(x, y)$statistic);
   } else {
     statistic <- NA;
   };
@@ -74,7 +74,7 @@ ks.dev.s <- function(x, y){
     model <- cbind(date, model);
   
     # join ks results to the data and return
-    z <- join(z, model, by = 'date');
+    z <- left_join(z, model, by = 'date');
     } else {	
 	
 	z$p.value <- NA;

@@ -31,15 +31,17 @@ loadMap <- function(x, multiple.files = FALSE, set.date = Sys.time(), obs, time.
   
   library(leaflet);
   
+  set.date <- as.POSIXct(set.date, tz = 'UTC');
+  set.date <- force_tz(set.date, tz = time.zone);
+  last.date <- set.date - days(7); # a week prior to set.date
+  
   # load the data
   if(multiple.files == F){
     data = x;
   };
   
   if(multiple.files == T){
-    first.date <- ymd_hms(set.date, tz = time.zone);
-    last.date <- first.date - 60*60*24*7; # a week prior to first.date
-    date.list <- seq(as.Date(last.date, tz = time.zone), as.Date(first.date, tz = time.zone), by = 'days');
+    date.list <- seq(as.Date(last.date, tz = time.zone), as.Date(set.date, tz = time.zone), by = 'days');
     date.list2 <- paste(date.list, collapse = '|');
     file.list <- list.files(x, pattern = date.list2, full.names = T);
     data <- do(file.list, fread, sep = ',');

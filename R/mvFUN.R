@@ -27,10 +27,11 @@ mvFUN <- function(x, proxy = 'comparison.value', obs = 'obs', date = 'date', win
 	# define selected variables
   # use `data.table` package to deal with large datasets
 	x <- as.data.table(x);
+	x$date <- x[, date];
 	x[, date := ymd_hms(date)];
     
   # clause on type of analysis to be run
-	if (reflective == TRUE){
+	if (all.data == TRUE){
 		date.start = min(x$date, na.rm = T);
 		date.end = max(x$date, na.rm = T);
 	} else {
@@ -52,7 +53,7 @@ mvFUN <- function(x, proxy = 'comparison.value', obs = 'obs', date = 'date', win
 	# create custom MV functions
 	mv.dev.i <- function(x, y){
 		min.length <- min(c(length(na.omit(x)), length(na.omit(y))))
-		if(min.length > 0.25 * window){
+		if(min.length > 0.25 * window.length){
 			if(truncate == TRUE){
 				if(trun.direction == 'over'){
 					x <- ifelse(x > mean(x, na.rm = T), x, NA);
@@ -71,7 +72,7 @@ mvFUN <- function(x, proxy = 'comparison.value', obs = 'obs', date = 'date', win
   
   mv.dev.s <- function(x, y){
 		min.length <- min(c(length(na.omit(x)), nrow(length(y))))
-		if(min.length > 0.25 * window){
+		if(min.length > 0.25 * window.length){
       if(truncate == TRUE){
         if(trun.direction == 'over'){
           x <- ifelse(x > mean(x, na.rm = T), x, NA);

@@ -10,17 +10,18 @@
 #' nearestNSitesFUN()
 
 
-nearestNSitesFUN <- function(x, id, lat, lon, n, weighted = F){
+nearestNSitesFUN <- function(x, id, lat, lon, n){
 
   library(stats);library(sp);library(geosphere);library(rgeos);library(tidyverse)
   output.file <- NULL
 
-  x$id <- x[, id]; x$lat <- x[, lat]; x$lon <- x[, lon]
+  x$id <- x[[id]]; x$lat <- x[[lat]]; x$lon <- x[[lon]]
 
   x <- x %>%
     dplyr::select(id, lat, lon) %>%
+    unique() %>%
     na.omit()
-  rownames(x) <- seq(length = nrow(x))
+  suppressWarnings(rownames(x) <- seq(length = nrow(x)))
 
   sp.x = x
   coordinates(sp.x) <- ~lon+lat
