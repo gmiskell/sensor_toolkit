@@ -18,7 +18,7 @@ nearestsiteFUN <- function(x, obs, group, lat, lon){
 
   # define variables
   x <- as.data.frame(x)
-  x$obs <- x[, obs]; x$group <- x[, group]; x$lat <- x[, lat]; x$lon <- x[, lon];
+  x$obs <- x[[obs]]; x$group <- x[[group]]; x$lat <- x[[lat]]; x$lon <- x[[lon]];
 
   # find closest sites
   y <- x %>%

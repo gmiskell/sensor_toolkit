@@ -24,7 +24,7 @@ ksFUN <- function(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA, wi
 	# define selected variables
 	# use `data.table` package to deal with large datasets
 	x <- as.data.table(x);
-	x$date <- x[,..date];
+	x$date <- x[[date]];
 	x[, date := ymd_hms(date)];
 	
 	# clause on type of analysis to be run
@@ -39,8 +39,8 @@ ksFUN <- function(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA, wi
 	
 	# assign variable names and filter data to the set dates
 	x <- x[date %within% interval(date.start, date.end)];
-	x$proxy <- x[,..proxy];
-	x$obs <- x[,..obs];
+	x$proxy <- x[[proxy]];
+	x$obs <- x[[obs]];
 	x <- x[order(date)];
 	
 	# select the required columns

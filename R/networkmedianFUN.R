@@ -19,9 +19,9 @@ networkmedianFUN <- function(x, group, obs, by.row = T, id = NA, statistic = med
 
   # define variables
   x <- as.data.table(x);
-  x$obs <- x[, ..obs];
-  x$group <- x[, ..group];
-  if(!is.na(id)) x$id <- x[, ..id];
+  x$obs <- x[[obs]];
+  x$group <- x[[group]];
+  if(!is.na(id)) x$id <- x[[id]];
 
   # filter data to that of interest
   z = x[, list(group, obs)];
