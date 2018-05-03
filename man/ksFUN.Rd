@@ -4,7 +4,7 @@
 \alias{ksFUN}
 \title{A running Kolmogorov-Smirnov (KS) two-sample test function.}
 \usage{
-ksFUN(x, obs, date, proxy, reflective = TRUE, theta = NA, tau = NA,
+ksFUN(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA,
   window.length = 72)
 }
 \arguments{
@@ -14,13 +14,13 @@ ksFUN(x, obs, date, proxy, reflective = TRUE, theta = NA, tau = NA,
 
 \item{proxy}{The comparison data.}
 
+\item{all.data}{This decides whether to use all provided data (all.data - `TRUE`), or to use data from the latest day (`FALSE`), which makes the function possible to run as a schedule for real-time updating. Defaults to `TRUE`.}
+
 \item{theta}{This sets the test threshold on whether to flag the data. Defaults to `NA` (no flags given).}
 
 \item{tau}{This sets the day threshold on whether to flag the data given consistent theta flags. Defaults to `NA` (no flags given).}
 
 \item{window.length}{This defines the length of the sampled window, defined by row number. Default is 72 (three days of hourly data).}
-
-\item{all.data}{This decides whether to use all provided data (all.data - `TRUE`), or to use data from the latest day (`FALSE`), which makes the function possible to run as a schedule for real-time updating. Defaults to `TRUE`.}
 }
 \description{
 This function gives the running KS test for an observation, relative to a proxy from some other observation/s.
