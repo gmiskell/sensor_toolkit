@@ -26,8 +26,10 @@ mvFUN <- function(x, proxy = 'comparison.value', obs = 'obs', date = 'date', win
 	
 	# define selected variables
   # use `data.table` package to deal with large datasets
-	x <- as.data.table(x);
 	x$date <- x[[date]];
+	x$obs <- x[[obs]];
+	x$proxy <- x[[proxy]];
+	x <- as.data.table(x);
 	x[, date := ymd_hms(date)];
     
   # clause on type of analysis to be run
@@ -41,12 +43,10 @@ mvFUN <- function(x, proxy = 'comparison.value', obs = 'obs', date = 'date', win
 	};
 	
 	x <- x[date %within% interval(date.start, date.end)];
-	x$obs <- x[[obs]];
-	x$proxy <- x[[proxy]];
 	x <- x[order(date)];
 	date <- x[[date]];
 	
-	y <- data.frame(x[, obs], x[, proxy]);
+	y <- data.frame(x[[obs]], x[[proxy]]);
 	y.zoo <- zoo(y);
 	colnames(y.zoo) <- c('s','r');
 	
