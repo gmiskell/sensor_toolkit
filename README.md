@@ -4,14 +4,8 @@
 The sensor toolkit offers a collection of R scripts that can be used to help in managing a low-cost air pollution sensor network. Most analysis here is set to run in a "real time" framework, with use of running metrics.
 
 ### Set up.
-Most tests have included their required packages in their initialisation. However, packages being used are also loaded.
-
-    library(lubridate)
-    library(raster)
-    library(ggmap)
-    library(tidyverse)
-    library(devtools)
     
+    library(devtools)
     # load the dev sensortoolkit from GitHub
     install_github('gmiskell/sensortoolkit')
     library(sensortoolkit)
