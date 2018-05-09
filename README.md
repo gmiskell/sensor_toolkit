@@ -119,7 +119,7 @@ This proxy function also only identifies the locations within a specified radius
 
 #### ksFUN - A running two-sided Kolmogorov-Smirnov test.
 
-    ks.example = network.example %>% 
+    ks.example = networkmedian.example %>% 
       group_by(site) %>% 
       do(ksFUN(., obs = 'obs', date = 'date', proxy = 'network.proxy'))
     |==============================================================|100% ~0 s remaining     
@@ -143,10 +143,10 @@ This proxy function also only identifies the locations within a specified radius
 
 #### mvFUN - A running custom Mean-Variance comparison test.
 
-    mv.example = network.example %>% 
+    mv.example = networkmedian.example %>% 
       group_by(site) %>% 
       do(mvFUN(., obs = 'obs', date = 'date', proxy = 'network.proxy')) %>% 
-      spread(test, statistic)
+      spread(test, statistic) # if using warning and alarms keep data in long format
     |==============================================================|100% ~0 s remaining     
     as.tibble(mv.example)
     # A tibble: 22,362 x 6
@@ -174,4 +174,4 @@ Map [here](http://christchurch_pm.droppages.com/latest+map)
 
 #### shiny_display - A script for creating an interactive shiny app.
 
-    shiny_display(example, cols.to.display = 'O3')
+    shiny_display(as.data.frame(example), cols.to.display = 'O3')
