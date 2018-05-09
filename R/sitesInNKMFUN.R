@@ -4,7 +4,7 @@
 #' @param id Name of the location (as character string).
 #' @param lat Latitude column.
 #' @param lon Longitude column.
-#' @param n Distance radius (in degrees). Kilometre distance can be found using the latitude of the measurement locaition. For example, latitude = ~ 40.500000. 
+#' @param n Distance radius (in degrees). Kilometre distance can be found using the latitude of the measurement locaition.
 #' @param as.list Option to unite the selected sites into a string (can be useful for later selection).
 #' @export
 #' @examples
@@ -12,7 +12,7 @@
 
 sitesInNKMFUN <- function(x, id, lat, lon, n, as.list = F){
   
-  library(stats);library(sp);library(rgeos);library(tidyverse)
+  library(stats); library(sp); library(rgeos); library(tidyverse)
   
   x$id <- x[[id]]; x$lat <- x[[lat]]; x$lon <- x[[lon]]
   

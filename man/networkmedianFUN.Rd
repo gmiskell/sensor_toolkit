@@ -2,25 +2,25 @@
 % Please edit documentation in R/networkmedianFUN.R
 \name{networkmedianFUN}
 \alias{networkmedianFUN}
-\title{Deriving the network median.
-The network median is found for each iteration (normally based on timeseries). Values are removed, one at a time, across the iteration, with the removal specified by the group option. The final product is a column that for the network value that can be used as a proxy in other analyses.}
+\title{Deriving the Network Median.
+The network median is found for each iteration. Values are removed, one at a time, across the iteration, with the removal specified by the group option. To run this over a time-series the group would be the date. The final product is a column of the network median that can be used as a proxy in other analyses.}
 \usage{
-networkmedianFUN(x, group, obs, by.row = T, id = NA, statistic = median)
+networkmedianFUN(x, group, obs, by.group = T, id = NA, statistic = median)
 }
 \arguments{
 \item{group}{An identifying variable.}
 
 \item{obs}{The data to derive the network median from.}
 
-\item{by.row}{This option is if the iterations need to happen over the group (default, `TRUE`).}
+\item{by.group}{This option is if the iterations need to happen over the group (default, `TRUE`). `FALSE` uses all values.}
 
 \item{id}{This is an option if some column is required to remain in the final output (e.g. site). Default is `NA`.}
 
-\item{statistic}{This is the statistic to use to summarise the data. Default is `median`.}
+\item{statistic}{This is the statistic to summarise the data. Default is `median`. Other options are `mean` or `sd`.}
 }
 \description{
-Deriving the network median.
-The network median is found for each iteration (normally based on timeseries). Values are removed, one at a time, across the iteration, with the removal specified by the group option. The final product is a column that for the network value that can be used as a proxy in other analyses.
+Deriving the Network Median.
+The network median is found for each iteration. Values are removed, one at a time, across the iteration, with the removal specified by the group option. To run this over a time-series the group would be the date. The final product is a column of the network median that can be used as a proxy in other analyses.
 }
 \examples{
 networkmedianFUN()

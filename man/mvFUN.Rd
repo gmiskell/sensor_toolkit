@@ -2,38 +2,35 @@
 % Please edit documentation in R/mvFUN.R
 \name{mvFUN}
 \alias{mvFUN}
-\title{A running mean-variance function.}
+\title{Running Mean-Variance Test.}
 \usage{
-mvFUN(x, proxy = "comparison.value", obs = "obs", date = "date",
-  window.length = 72, slope.theta = NA, intercept.theta = NA, tau = NA,
-  accum = FALSE, truncate = FALSE, all.data = TRUE,
+mvFUN(x, obs, date, proxy, all.data = TRUE, intercept.theta = NA,
+  slope.theta = NA, tau = NA, window.length = 72, truncate = FALSE,
   trun.direction = "over")
 }
 \arguments{
-\item{proxy}{The comparison data.}
-
 \item{obs}{The data under investigation.}
 
 \item{date}{A required column with the format 'YYYY-MM-DD HH:MM:SS'.}
 
-\item{window.length}{This defines the length of the sampled window, defined by row number. Default is 72 (three days of hourly data).}
+\item{proxy}{The comparison data.}
 
-\item{slope.theta}{This sets the test threshold on whether to flag the data for the slope. Defaults to `NA` (no flags given).}
+\item{all.data}{This decides whether to use all provided data (all.data - `TRUE`), or to use data from the latest day (`FALSE`), which makes the function possible to run as a schedule for real-time updating. Defaults to `TRUE`.}
 
 \item{intercept.theta}{This sets the test threshold on whether to flag the data for the intercept. Defaults to `NA` (no flags given).}
 
+\item{slope.theta}{This sets the test threshold on whether to flag the data for the slope. Defaults to `NA` (no flags given).}
+
 \item{tau}{This sets the day threshold on whether to flag the data given consistent theta flags. Defaults to `NA` (no flags given).}
 
-\item{accum}{This is if the data before the `n` sample size should still perform the statistics with a reduced sample size.}
+\item{window.length}{This defines the length of the sampled window, defined by row number. Default is 72 (three days of hourly data).}
 
 \item{truncate}{This is is subsets of the data should be derived, by using only values above or below the mean to derive the mean and variance.}
-
-\item{all.data}{This decides whether to use all provided data (all.data - `TRUE`), or to use data from the latest day (`FALSE`), which makes the function possible to run as a schedule for real-time updating. Defaults to `TRUE`.}
 
 \item{trun.direction}{This the side of the mean to take for the sample, if truncate is `TRUE`. Options are 'under' (below the sample mean) or 'over' (above the sample mean).}
 }
 \description{
-A running mean-variance function.
+This function gives the running MV test for an observation, relative to a proxy from some other observation/s.
 }
 \examples{
 mvFUN()

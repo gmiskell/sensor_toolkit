@@ -2,41 +2,38 @@
 % Please edit documentation in R/loadMap.R
 \name{loadMap}
 \alias{loadMap}
-\title{A mapping function. It is set up to work in a near real-time manner, where (multiple) daily files are created and saved to a location. Plots use the last seven days.}
+\title{Mapping Function.}
 \usage{
-loadMap(x, multiple.files = FALSE, set.date = Sys.time(), obs, time.zone,
-  id, tier = NA, lat, lon, dest, statistic = "latest",
-  leaflet.title = "Leaflet Map")
+loadMap(x, multiple.files = FALSE, set.date, time.zone, obs, id, tier = NA,
+  lat, lon, statistic = "latest", dest, leaflet.title = "Leaflet Map")
 }
 \arguments{
-\item{x}{This is either the file (default) or the location of a list of files to upload (if multuple.files is set to `TRUE`).}
+\item{x}{Either the file in R (default) or the location of a list of files to upload (if multuple.files is set to `TRUE`).}
 
 \item{multiple.files}{An option if multiple files saved locally are to be plotted. Can be useful if there are a few daily files saved that need combining. This option is useful if the function is to run continuously.}
 
-\item{set.date}{This is the latest date for the examined sample. Defaults to `Sys.time()`.}
+\item{set.date}{Latest date for the examined sample.}
 
-\item{obs}{This is the column under observation. Should be a numeric value. Can be multiple columns (e.g. "c("colA","colB")).}
+\item{time.zone}{Time zone of the location (e.g. `Pacific/Auckland`).}
 
-\item{time.zone}{This is the time zone of the location (e.g. `Pacific/Auckland`).}
+\item{obs}{Column under observation. Should be a numeric value. Can be multiple columns (e.g. "c("colA","colB")).}
 
-\item{id}{This is an identifier column (e.g. site location name).}
+\item{id}{Identifier column (e.g. site location name).}
 
-\item{tier}{This is an additional identifier column, if needed (e.g. different measurement techniques).}
+\item{tier}{An additional identifier column, if needed (e.g. different measurement techniques).}
 
 \item{lat}{Latitude.}
 
 \item{lon}{Longitude.}
 
-\item{dest}{This is the location where the interactive map will be saved on the local drive.}
+\item{statistic}{Choice of summary statistic. Options are `latest` (default), `mean`, `median`, `sd`, `min`, and `max`.}
 
-\item{statistic}{This is the choice for statistic to be presented. Options are `latest` (default), `mean`, `median`, `sd`, `min`, and `max`.}
+\item{dest}{Location where the interactive map will be saved on the local drive.}
 
-\item{leaflet.title}{This is some descriptor of the leaflet, if needed.}
-
-\item{date}{This is the date column (set up as 'YYYY-MM-DD HH:MM:SS').}
+\item{leaflet.title}{A descriptor of the leaflet used in naming the HTML output.}
 }
 \description{
-This function gives a map with summary pop-ups for a set of observations.
+Function set up to work in near real-time, where (multiple) files can be created and saved to a working directory or data come from inside R environment. Summaries use the last seven days.
 }
 \examples{
 loadMap()

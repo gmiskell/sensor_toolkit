@@ -13,7 +13,7 @@ sitesInNKMFUN(x, id, lat, lon, n, as.list = F)
 
 \item{lon}{Longitude column.}
 
-\item{n}{Distance radius (in degrees). Kilometre distance can be found using the latitude of the measurement locaition. For example, latitude = ~ 40.500000.}
+\item{n}{Distance radius (in degrees). Kilometre distance can be found using the latitude of the measurement locaition.}
 
 \item{as.list}{Option to unite the selected sites into a string (can be useful for later selection).}
 }

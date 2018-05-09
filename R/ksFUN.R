@@ -1,10 +1,10 @@
-#' A running Kolmogorov-Smirnov (KS) two-sample test function.
+#' Running Kolmogorov-Smirnov (KS) Two-Sample Test.
 #'
 #' This function gives the running KS test for an observation, relative to a proxy from some other observation/s.
 #' @param obs The data under investigation.
 #' @param date A required column with the format 'YYYY-MM-DD HH:MM:SS'.
 #' @param proxy The comparison data.
-#' @param all.data This decides whether to use all provided data (all.data - `TRUE`), or to use data from the latest day (`FALSE`), which makes the function possible to run as a schedule for real-time updating. Defaults to `TRUE`.
+#' @param all.data This decides whether to use all provided data (all.data - `TRUE`), or to run the function on live data (`FALSE`), which makes the function possible to run as a schedule for real-time updating. Defaults is `TRUE`.
 #' @param theta This sets the test threshold on whether to flag the data. Defaults to `NA` (no flags given).
 #' @param tau This sets the day threshold on whether to flag the data given consistent theta flags. Defaults to `NA` (no flags given).
 #' @param window.length This defines the length of the sampled window, defined by row number. Default is 72 (three days of hourly data).

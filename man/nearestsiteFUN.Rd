@@ -2,7 +2,7 @@
 % Please edit documentation in R/nearestsiteFUN.R
 \name{nearestsiteFUN}
 \alias{nearestsiteFUN}
-\title{This function gives the proxy type of nearest site data.}
+\title{Identify Nearest Site.}
 \usage{
 nearestsiteFUN(x, obs, group, lat, lon)
 }

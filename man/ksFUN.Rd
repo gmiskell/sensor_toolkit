@@ -2,7 +2,7 @@
 % Please edit documentation in R/ksFUN.R
 \name{ksFUN}
 \alias{ksFUN}
-\title{A running Kolmogorov-Smirnov (KS) two-sample test function.}
+\title{Running Kolmogorov-Smirnov (KS) Two-Sample Test.}
 \usage{
 ksFUN(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA,
   window.length = 72)
@@ -14,7 +14,7 @@ ksFUN(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA,
 
 \item{proxy}{The comparison data.}
 
-\item{all.data}{This decides whether to use all provided data (all.data - `TRUE`), or to use data from the latest day (`FALSE`), which makes the function possible to run as a schedule for real-time updating. Defaults to `TRUE`.}
+\item{all.data}{This decides whether to use all provided data (all.data - `TRUE`), or to run the function on live data (`FALSE`), which makes the function possible to run as a schedule for real-time updating. Defaults is `TRUE`.}
 
 \item{theta}{This sets the test threshold on whether to flag the data. Defaults to `NA` (no flags given).}
 
