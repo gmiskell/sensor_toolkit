@@ -119,7 +119,7 @@ This proxy function also only identifies the locations within a specified radius
 
 #### ksFUN - A running two-sided Kolmogorov-Smirnov test.
 
-    ks.example = network.example %>% 
+    ks.example = networkmedian.example %>% 
       group_by(site) %>% 
       do(ksFUN(., obs = 'obs', date = 'date', proxy = 'network.proxy'))
     |==============================================================|100% ~0 s remaining     
@@ -143,7 +143,7 @@ This proxy function also only identifies the locations within a specified radius
 
 #### mvFUN - A running custom Mean-Variance comparison test.
 
-    mv.example = network.example %>% 
+    mv.example = networkmedian.example %>% 
       group_by(site) %>% 
       do(mvFUN(., obs = 'obs', date = 'date', proxy = 'network.proxy')) %>% 
       spread(test, statistic)
