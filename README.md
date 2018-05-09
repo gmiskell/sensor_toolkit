@@ -146,7 +146,7 @@ This proxy function also only identifies the locations within a specified radius
     mv.example = networkmedian.example %>% 
       group_by(site) %>% 
       do(mvFUN(., obs = 'obs', date = 'date', proxy = 'network.proxy')) %>% 
-      spread(test, statistic)
+      spread(test, statistic) # if using warning and alarms keep data in long format
     |==============================================================|100% ~0 s remaining     
     as.tibble(mv.example)
     # A tibble: 22,362 x 6
