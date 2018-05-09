@@ -170,8 +170,6 @@ This proxy function also only identifies the locations within a specified radius
 
     loadMap(example, set.date = '2017-10-15', obs = 'O3', time.zone = 'Pacific/Auckland', id = 'site', lat = 'lat', lon = 'lon', dest = '')
 
-Map [here](http://christchurch_pm.droppages.com/latest+map)
-
 #### shiny_display - A script for creating an interactive shiny app.
 
     shiny_display(as.data.frame(example), cols.to.display = 'O3')
