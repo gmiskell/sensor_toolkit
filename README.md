@@ -174,4 +174,4 @@ Map [here](http://christchurch_pm.droppages.com/latest+map)
 
 #### shiny_display - A script for creating an interactive shiny app.
 
-    shiny_display(example, cols.to.display = 'O3')
+    shiny_display(as.data.frame(example), cols.to.display = 'O3')
