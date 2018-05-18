@@ -27,7 +27,7 @@ mvFUN <- function(x, obs, date, proxy, all.data = TRUE, intercept.theta = NA, sl
 	# use `data.table` package to deal with large datasets
 	x$date <- x[[date]]; x$obs <- x[[obs]]; x$proxy <- x[[proxy]];
 	x <- as.data.table(x);
-	x[, date := ymd_hms(date)];
+	setDT(x)[, date := ymd_hms(date)];
     
 	# clause on type of analysis to be run
 	if (all.data == TRUE){
@@ -97,8 +97,8 @@ mvFUN <- function(x, obs, date, proxy, all.data = TRUE, intercept.theta = NA, sl
 
 	mv_intercept <- data.frame(intercept);
 	colnames(mv_intercept)[1] <- 'mv_value';
-	mv_value$test <- 'mv_intercept';
-	intercept <- cbind(date, mv_value);
+	mv_intercept$test <- 'mv_intercept';
+	intercept <- cbind(date, mv_intercept);
   
 	# use theta and tau thresholds if present
 	if(!is.na(slope.theta)){

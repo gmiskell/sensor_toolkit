@@ -25,7 +25,7 @@ ksFUN <- function(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA, wi
 	# use `data.table` package to deal with large datasets
 	x <- as.data.table(x);
 	x$date <- x[[date]];
-	x[, date := ymd_hms(date)];
+	setDT(x)[, date := ymd_hms(date)];
 	
 	# clause on type of analysis to be run
 	if (all.data == TRUE){
