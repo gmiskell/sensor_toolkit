@@ -139,7 +139,7 @@ This proxy function also only identifies the locations within a specified radius
     # ... with 22,339 more rows
     ggplot(ks.example, aes(date, statistic)) + geom_line() + facet_wrap(~site)
 
-[](ks_example.tiff)
+![alt text](ks_example.tiff)
 
 #### mvFUN - A running custom Mean-Variance comparison test.
 
@@ -166,7 +166,7 @@ This proxy function also only identifies the locations within a specified radius
     # ... with 22,352 more rows
     ggplot(mv.example, aes(date, mv_intercept)) + geom_line() + facet_wrap(~site)
     
-[](mv_example.tiff)
+![](mv_example.tiff)
 
 #### loadMap - A script for creating and saving a HTML leaflet map.
 
