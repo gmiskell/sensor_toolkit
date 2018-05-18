@@ -176,4 +176,4 @@ This proxy function also only identifies the locations within a specified radius
 
     shiny_display(as.data.frame(example), cols.to.display = 'pol')
 
-[](https://github.com/gmiskell/sensortoolkit/blob/master/shiny_example.png)
+![](https://github.com/gmiskell/sensortoolkit/blob/master/shiny_example.png)
