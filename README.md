@@ -139,7 +139,7 @@ This proxy function also only identifies the locations within a specified radius
     # ... with 22,339 more rows
     ggplot(ks.example, aes(date, statistic)) + geom_line() + facet_wrap(~site)
 
-![alt text](ks_example.tiff)
+![alt text](https://raw.githubusercontent.com/gmiskell/sensortookit/branch/path/to/ks_example.tiff)
 
 #### mvFUN - A running custom Mean-Variance comparison test.
 
