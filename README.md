@@ -139,7 +139,7 @@ This proxy function also only identifies the locations within a specified radius
     # ... with 22,339 more rows
     ggplot(ks.example, aes(date, statistic)) + geom_line() + facet_wrap(~site)
 
-![alt text](https://raw.githubusercontent.com/gmiskell/sensortookit/branch/path/to/ks_example.tiff)
+![](https://github.com/gmiskell/sensortoolkit/blob/master/ks_example.png)
 
 #### mvFUN - A running custom Mean-Variance comparison test.
 
@@ -166,7 +166,7 @@ This proxy function also only identifies the locations within a specified radius
     # ... with 22,352 more rows
     ggplot(mv.example, aes(date, mv_intercept)) + geom_line() + facet_wrap(~site)
     
-![](mv_example.tiff)
+![](https://github.com/gmiskell/sensortoolkit/blob/master/mv_example.png)
 
 #### loadMap - A script for creating and saving a HTML leaflet map.
 
@@ -176,4 +176,4 @@ This proxy function also only identifies the locations within a specified radius
 
     shiny_display(as.data.frame(example), cols.to.display = 'pol')
 
-[](shiny_example.tiff)
+![](https://github.com/gmiskell/sensortoolkit/blob/master/shiny_example.png)
