@@ -18,8 +18,6 @@ shiny_display <- function(x, time.zone = 'Pacific/Auckland', data.frequency = '6
 
   # install and load required packages
 	list.of.packages <- c("shinyjs","shiny","xts","leaflet","raster","gstat","shinydashboard","sp","dygraphs","dplyr");
-	new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])];
-	if(length(new.packages)) install.packages(new.packages);
 	lapply(list.of.packages, library, character.only = T);
   require(rgdal);
 

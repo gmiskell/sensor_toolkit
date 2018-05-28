@@ -12,7 +12,7 @@
 
 sitesInNKMFUN <- function(x, id, lat, lon, n, as.list = F){
   
-  library(stats); library(sp); library(rgeos); library(tidyverse)
+  library(sp); library(rgeos); library(tidyverse)
   
   x$id <- x[[id]]; x$lat <- x[[lat]]; x$lon <- x[[lon]]
   

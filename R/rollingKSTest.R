@@ -9,9 +9,6 @@
 
 rollingKStest <- function(z, obs, proxy, window = 1440){
   
-  list.of.packages <- c("zoo","dplyr");
-  new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])];
-  if(length(new.packages)) install.packages(new.packages);
   library(zoo);library(dplyr);
 
   # define variables

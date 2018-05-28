@@ -12,7 +12,7 @@
 
 nearestNSitesFUN <- function(x, id, lat, lon, n){
   			
-	library(stats); library(sp); library(geosphere); library(rgeos); library(tidyverse)
+	library(sp); library(geosphere); library(rgeos); library(tidyverse)
 	output.file <- NULL
 
 	x$id <- x[[id]]; x$lat <- x[[lat]]; x$lon <- x[[lon]]

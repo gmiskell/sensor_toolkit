@@ -20,8 +20,6 @@
 loadMap <- function(x, multiple.files = FALSE, set.date, time.zone, obs, id, tier = NA, lat, lon, statistic = 'latest', dest, leaflet.title = 'Leaflet Map') {
   
   list.of.packages <- c("lubridate","htmlwidgets","tidyverse");
-  new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])];
-  if(length(new.packages)) install.packages(new.packages);
   lapply(list.of.packages, library, character.only = TRUE);
   
   # install the development version of leaflet

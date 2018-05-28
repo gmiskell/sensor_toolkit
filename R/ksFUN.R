@@ -17,8 +17,6 @@ ksFUN <- function(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA, wi
 	
 	# install and load required packages
 	list.of.packages <- c("raster","lubridate","data.table","tidyverse");
-	new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])];
-	if(length(new.packages)) install.packages(new.packages); 
 	lapply(list.of.packages, library, character.only = T);
 	
 	# define selected variables

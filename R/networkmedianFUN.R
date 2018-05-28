@@ -12,10 +12,7 @@
 
 networkmedianFUN <- function(x, group, obs, by.group = T, id = NA, statistic = median){
 
-	list.of.packages <- c("stats","lubridate","data.table","tidyverse");
-	new.packages <- list.of.packages[!(list.of.packages %in%
-		installed.packages()[,"Package"])];
-	if(length(new.packages)) install.packages(new.packages);
+	list.of.packages <- c("lubridate","data.table","tidyverse");
 	lapply(list.of.packages, library, character.only = T);
 
 	# define variables

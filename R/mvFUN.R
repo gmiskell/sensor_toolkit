@@ -18,9 +18,7 @@
 mvFUN <- function(x, obs, date, proxy, all.data = TRUE, intercept.theta = NA, slope.theta = NA, tau = NA, window.length = 72, truncate = FALSE, trun.direction = 'over'){
 	
 	# install and load required packages
-	list.of.packages <- c("stats", "lubridate", "zoo", "raster", "data.table", "tidyverse");
-	new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])];
-	if(length(new.packages)) install.packages(new.packages);
+	list.of.packages <- c("lubridate", "zoo", "raster", "data.table", "tidyverse");
 	lapply(list.of.packages, library, character.only = T);
 	
 	# define selected variables
