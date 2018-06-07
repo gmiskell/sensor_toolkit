@@ -30,8 +30,8 @@ ksFUN <- function(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA, wi
 		date.start = min(x$date, na.rm = T);
 		date.end = max(x$date, na.rm = T);
 	} else {
-		date.start = Sys.time()-60*60*24*7; # a week prior from Sys.time
-		date.end = Sys.time();
+		date.start = now()-60*60*24*7; # a week prior from system time
+		date.end = now();
 		date.start <- ymd_hms(date.start); date.end <- ymd_hms(date.end);
 	};
 	
