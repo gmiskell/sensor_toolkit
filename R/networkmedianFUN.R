@@ -12,18 +12,17 @@
 
 networkmedianFUN <- function(x, group, obs, by.group = T, id = NA, statistic = median){
 
-	list.of.packages <- c("lubridate","data.table","tidyverse");
+	list.of.packages <- c("lubridate","tidyverse");
 	lapply(list.of.packages, library, character.only = T);
 
 	# define variables
-	x <- as.data.table(x);
 	x$obs <- x[[obs]];
 	x$group <- x[[group]];
 	if(!is.na(id)) x$id <- x[[id]];
 
 	# filter data to that of interest
-	z = x[, list(group, obs)];
-	if(!is.na(id)) z.id <- x[, list(group, id, obs)];
+	z <- x %>% dplyr::select(group, obs);
+	if(!is.na(id)) z.id <- x %>% dplyr::select(group, id, obs);
 
 	net.day.FUN <- function(z){
 		if(length(z$obs) > 1){
@@ -57,7 +56,7 @@ networkmedianFUN <- function(x, group, obs, by.group = T, id = NA, statistic = m
 	}
 
 	if(by.group == T){
-		Z.data <- z[, net.day.FUN(.SD), by = group];
+		Z.data <- z %>% group_by(group) %>% do(net.day.FUN(.));
 	}
 
 	if(by.group == F){

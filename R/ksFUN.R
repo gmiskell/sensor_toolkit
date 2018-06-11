@@ -16,14 +16,12 @@
 ksFUN <- function(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA, window.length = 72){
 	
 	# install and load required packages
-	list.of.packages <- c("raster","lubridate","data.table","tidyverse");
+	list.of.packages <- c("raster","lubridate","tidyverse");
 	lapply(list.of.packages, library, character.only = T);
 	
 	# define selected variables
-	# use `data.table` package to deal with large datasets
-	x <- as.data.table(x);
 	x$date <- x[[date]];
-	setDT(x)[, date := ymd_hms(date)];
+	x$date <- ymd_hms(x$date);
 	
 	# clause on type of analysis to be run
 	if (all.data == TRUE){
@@ -36,13 +34,12 @@ ksFUN <- function(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA, wi
 	};
 	
 	# assign variable names and filter data to the set dates
-	x <- x[date %within% interval(date.start, date.end)];
+	x <- x %>% filter(date %within% interval(date.start, date.end));
 	x$proxy <- x[[proxy]];
 	x$obs <- x[[obs]];
-	x <- x[order(date)];
 	
 	# select the required columns
-	x <- x[, list(date, obs, proxy)];
+	x <- x %>% dplyr::select(date, obs, proxy);
 	
 	# remove any repeating and empty rows
 	x <- unique.data.frame(x);
@@ -54,17 +51,16 @@ ksFUN <- function(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA, wi
 	} else {
 		ks.x <- cbind(x, p.value = rep(NA, length(x[[1]])), statistic = rep(NA, length(x[[1]])));
 	}
-	ks.x <- as.data.table(ks.x);
 	
 	# use theta and tau thresholds, if set
 	if(!is.na(theta)){
-		ks.x <- setDT(ks.x)[, warning := ifelse(p.value < theta, 1, 0)];
-		ks.x <- ks.x[, warning := ifelse(is.na(warning), 0, warning)];
+		ks.x$warning <- ifelse(ks.x$p.value < theta, 1, 0);
+		ks.x$warning <- ifelse(is.na(ks.x$warning), 0, ks.x$warning);
 		if(!is.na(tau)){
 			# if else clause on whether the data are less than theta, becomes 1 if true, and 0 otherwise
 			# this looks at running means and is for tau, the length of time for alarms
-			ks.x <- ks.x[, alarm := movingFun(warning, n = tau, type = 'to', fun = mean, na.rm = T)];
-			ks.x <- ks.x[, alarm := ifelse(is.na(alarm), 0, alarm)];
+			ks.x$alarm <- movingFun(ks.x$warning, n = tau, type = 'to', fun = mean, na.rm = T);
+			ks.x$alarm <- ifelse(is.na(ks.x$alarm), 0, ks.x$alarm);
 		} else {
 			ks.x$alarm <- NA;
 		}; 
@@ -74,6 +70,5 @@ ksFUN <- function(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA, wi
 	};
 	
 	# gather variables of interest and return the final product
-	ks.x <- ks.x[, list(date, test = 'ks test', statistic = p.value, warning, alarm)];
-	ks.x;
+	ks.x <- ks.x %>% mutate(test = 'ks test') %>% dplyr::select(date, test, statistic = p.value, warning, alarm);
 };

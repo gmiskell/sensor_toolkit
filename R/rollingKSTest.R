@@ -24,7 +24,8 @@ rollingKStest <- function(z, obs, proxy, window = 1440){
     date <- z[, 'date'];
     
     # turn data into data frame
-    y <- data.frame(z$obs, z$proxy);
+    y <- z %>%
+    	dplyr::select(obs, proxy)
   
     # convert df into zoo classes used in R for rolling functions
     y.zoo <-zoo(y);

@@ -18,30 +18,27 @@
 mvFUN <- function(x, obs, date, proxy, all.data = TRUE, intercept.theta = NA, slope.theta = NA, tau = NA, window.length = 72, truncate = FALSE, trun.direction = 'over'){
 	
 	# install and load required packages
-	list.of.packages <- c("lubridate", "zoo", "raster", "data.table", "tidyverse");
+	list.of.packages <- c("lubridate", "zoo", "raster", "tidyverse");
 	lapply(list.of.packages, library, character.only = T);
 	
 	# define selected variables
-	# use `data.table` package to deal with large datasets
 	x$date <- x[[date]]; x$obs <- x[[obs]]; x$proxy <- x[[proxy]];
-	x <- as.data.table(x);
-	setDT(x)[, date := ymd_hms(date)];
+	x$date <- ymd_hms(x$date);
     
 	# clause on type of analysis to be run
 	if (all.data == TRUE){
 		date.start = min(x$date, na.rm = T);
 		date.end = max(x$date, na.rm = T);
 	} else {
-		date.start = Sys.time()-60*60*24*7;
-		date.end = Sys.time();
+		date.start = now()-60*60*24*7;
+		date.end = now();
 		date.start <- ymd_hms(date.start); date.end <- ymd_hms(date.end);
 	};
 	
-	x <- x[date %within% interval(date.start, date.end)];
-	x <- x[order(date)];
+	x <- x %>% filter(date %within% interval(date.start, date.end)) %>% arrange(date);
 	date <- x[[date]];
 	
-	y <- data.frame(x[[obs]], x[[proxy]]);
+	y <- x %>% dplyr::select(obs, proxy);
 	y.zoo <- zoo(y);
 	colnames(y.zoo) <- c('s','r');
 	
@@ -88,57 +85,53 @@ mvFUN <- function(x, obs, date, proxy, all.data = TRUE, intercept.theta = NA, sl
   
 	intercept <- rollapply(y.zoo, function(x) mv.dev.i(x[, 's'], x[, 'r']), width = window.length, by.column = F, fill = NA, align = 'right');
 
-	mv_slope <- data.frame(slope);
-	colnames(mv_slope)[1] <- 'mv_value';
-	mv_slope$test <- 'mv_slope';
-	slope <- cbind(date, mv_slope)
+	mv.slope <- data.frame(slope);
+	colnames(mv.slope)[1] <- 'mv_value';
+	mv.slope$test <- 'mv_slope';
+	mv.slope <- cbind(date, mv.slope)
 
-	mv_intercept <- data.frame(intercept);
-	colnames(mv_intercept)[1] <- 'mv_value';
-	mv_intercept$test <- 'mv_intercept';
-	intercept <- cbind(date, mv_intercept);
+	mv.intercept <- data.frame(intercept);
+	colnames(mv.intercept)[1] <- 'mv_value';
+	mv.intercept$test <- 'mv_intercept';
+	mv.intercept <- cbind(date, mv.intercept);
   
 	# use theta and tau thresholds if present
 	if(!is.na(slope.theta)){
-		mv.slope <- setDT(slope)[, warning := ifelse(mv_value > 1 + slope.theta, 1, 0)];
-		mv.slope <- mv.slope[, warning := ifelse(mv_value < 1 - slope.theta, 1, warning)]
-		mv.slope <- mv.slope[, warning := ifelse(is.na(warning), 0, warning)];
+		mv.slope$warning <- ifelse(mv.slope$mv_value > 1 + slope.theta, 1, 0);
+		mv.slope$warning <- ifelse(mv.slope$mv_value < 1 - slope.theta, 1, mv.slope$warning)
+		mv.slope$warning <- ifelse(is.na(mv.slope$warning), 0, mv.slope$warning);
 		if(!is.na(tau)){
 		# if else clause on whether the data are less than theta, becomes 1 if true, and 0 otherwise
 		# this looks at running means and is for tau, the length of time for alarms
-			mv.slope <- mv.slope[, alarm := movingFun(warning, n = tau, type = 'to', fun = mean, na.rm = T)];
-			mv.slope <- mv.slope[, alarm := ifelse(is.na(alarm), 0, alarm)];
+			mv.slope$alarm <- movingFun(mv.slope$warning, n = tau, type = 'to', fun = mean, na.rm = T);
+			mv.slope$alarm <- ifelse(is.na(mv.slope$alarm), 0, mv.slope$alarm);
 		} else {
-			mv.slope <- slope;
+			mv.slope <- mv.slope$mv_slope;
 			mv.slope$alarm <- NA;
 		}; 
 	} else {
-		mv.slope <- slope;
 		mv.slope$warning <- NA;
 		mv.slope$alarm <- NA;
 	};
     
 	# use theta and tau thresholds if present
 	if(!is.na(intercept.theta)){
-		mv.int <- setDT(intercept)[, warning := ifelse(mv_value > intercept.theta, 	1, 0)];
-		mv.int <- mv.int[, warning := ifelse(mv_value < -intercept.theta, 1, 	warning)];
-		mv.int <- mv.int[, warning := ifelse(is.na(warning), 0, warning)];
+		mv.intercept$warning <- ifelse(mv.intercept$mv_value > intercept.theta, 	1, 0);
+		mv.intercept$warning <- ifelse(mv.intercept$mv_value < -intercept.theta, 1, 	mv.intercept$warning);
+		mv.intercept$warning <- ifelse(is.na(mv.intercept$warning), 0, mv.intercept$warning);
 		if(!is.na(tau)){
-			# if else clause on whether the data are less than theta, becomes 1 if true, 	and 0 otherwise
-			# this looks at running means and is for tau, the length of time for alarms
-			mv.int <- mv.int[, alarm := movingFun(warning, n = tau, type = 'to', fun = 	mean, na.rm = T)];
-			mv.int <- mv.int[, alarm := ifelse(is.na(alarm), 0, alarm)];
+			mv.intercept$alarm <- movingFun(mv.intercept$warning, n = tau, type = 'to', fun = 	mean, na.rm = T);
+			mv.intercept$alarm <- ifelse(is.na(mv.intercept$alarm), 0, mv.intercept$alarm);
 		} else {
-			mv.int <- intercept;
-			mv.int$alarm <- NA;
+			mv.intercept <- mv.intercept$mv_intercept;
+			mv.intercept$alarm <- NA;
 		}; 
 	} else {
-		mv.int <- intercept;
-		mv.int$warning <- NA;
-		mv.int$alarm <- NA;
+		mv.intercept$warning <- NA;
+		mv.intercept$alarm <- NA;
 	};
   
-	z <- bind_rows(mv.int, mv.slope); 
+	z <- bind_rows(mv.intercept, mv.slope); 
 	b <- full_join(x, z, by = 'date');
 
 	# gather variables of interest and return
