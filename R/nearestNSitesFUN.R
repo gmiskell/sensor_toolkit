@@ -26,7 +26,7 @@ nearestNSitesFUN <- function(x, id, lat, lon, n){
 	sp.x = x
 	coordinates(sp.x) <- ~lon+lat
 
-	d <- gDistance(sp.x, byid = T)
+	d <- suppressWarnings(distm(sp.x))
 	min.distance <- apply(d, 2, function(x) order(x, decreasing = F)[2:(n+1)])
 
 	for(i in 1:n){
