@@ -30,6 +30,7 @@ Some example data, `example.RData` has been included for demonstration purposes.
 	# ... with 22,352 more rows
     
 ### Proxy options.
+<<<<<<< HEAD
 Proxies, a signal from an independent site or number of sites to the observation with similar statistical properties, was introduced in papers [here](https://www.researchgate.net/publication/286479082_Data_Verification_Tools_for_Minimizing_Management_Costs_of_Dense_Air-Quality_Monitoring_Networks). Here, the provided code uses **only** sensor data - nearby regulatory data has been found to be a good proxy if the data is available.
 
 #### sensornetworkmedianFUN
