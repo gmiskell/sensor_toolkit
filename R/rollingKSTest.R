@@ -38,7 +38,7 @@ rollingKStest <- function(z, obs, proxy, window = 1440){
   min.length <- min(c(length(na.omit(x)),length(na.omit(y))));
   
   if(min.length > 0.5 * length(x)){
-    p.value <- suppressWarnings(ks.test(x, y)$p.value);
+    p.value <- suppressWarnings(ks.test(unlist(x), unlist(y))$p.value);
   } else {
     p.value <- NA;
   }
@@ -50,7 +50,7 @@ ks.dev.s <- function(x, y){
   min.length <- min(c(length(na.omit(x)),length(na.omit(y))));
   
   if(min.length > 0.5 * length(x)){
-    statistic <- suppressWarnings(ks.test(x, y)$statistic);
+    statistic <- suppressWarnings(ks.test(unlist(x), unlist(y))$statistic);
   } else {
     statistic <- NA;
   };
@@ -72,7 +72,7 @@ ks.dev.s <- function(x, y){
     model <- cbind(date, model);
   
     # join ks results to the data and return
-    z <- left_join(z, model, by = 'date');
+    z <- left_join(z, model, by = 'date') %>% unique();
     } else {	
 	
 	z$p.value <- NA;
