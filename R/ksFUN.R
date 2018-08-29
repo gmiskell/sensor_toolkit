@@ -34,7 +34,7 @@ ksFUN <- function(x, obs, date, proxy, all.data = TRUE, theta = NA, tau = NA, wi
 	};
 	
 	# assign variable names and filter data to the set dates
-	x <- x %>% filter(date %within% interval(date.start, date.end));
+	x <- x %>% dplyr::filter(date %within% interval(date.start, date.end));
 	x$proxy <- x[[proxy]];
 	x$obs <- x[[obs]];
 	

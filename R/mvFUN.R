@@ -35,7 +35,7 @@ mvFUN <- function(x, obs, date, proxy, all.data = TRUE, intercept.theta = NA, sl
 		date.start <- ymd_hms(date.start); date.end <- ymd_hms(date.end);
 	};
 	
-	x <- x %>% filter(date %within% interval(date.start, date.end)) %>% arrange(date);
+	x <- x %>% dplyr::filter(date %within% interval(date.start, date.end)) %>% arrange(date);
 	date <- x[[date]];
 	
 	y <- x %>% dplyr::select(obs, proxy);

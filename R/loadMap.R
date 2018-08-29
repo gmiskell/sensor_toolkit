@@ -90,14 +90,14 @@ loadMap <- function(x, multiple.files = FALSE, set.date, time.zone, obs, id, tie
   if(statistic == 'latest'){
     data.sum <- data %>%
       group_by(site) %>%
-      filter(date == max(date)) %>%
+      dplyr::filter(date == max(date)) %>%
       mutate(date = force_tz(date, tzone = time.zone)) %>%
       ungroup()
   };
   
   # set up data for leaflet projection
   data.merge <- data.sum %>%
-    filter(lat != 'NaN' & lat != 0) %>%
+    dplyr::filter(lat != 'NaN' & lat != 0) %>%
     mutate(lat = jitter(lat, amount = 0.0005), 
            lon = jitter(lon, amount = 0.0005)) %>%
     mutate(instrument.status = ifelse(date > last.date - hours(12), 'Online', 'Offline'));
